@@ -1,18 +1,19 @@
 import FormItems from "../../components/FormItems/FormItems.tsx";
 import {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {IPostMutation} from "../../types";
+import { IQuoteForm} from "../../types";
 import axiosApi from "../../axiosApi.ts";
-import Spinner from "../../components/UI/Spinner/Spinner.tsx";
+import Spinner from "../../Ul/Spiner/Spinner.tsx";
+
 
 
 const NewQuote = () => {
     const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
-    const onSubmitAddNewPost = async (post: IPostMutation) => {
+    const onSubmitAddNewQuote = async (quote: IQuoteForm) => {
         try {
-            await axiosApi.post('posts.json', post)
+            await axiosApi.post('quotes.json', quote)
             navigate('/')
         } catch (e) {
             console.log(e);
@@ -22,12 +23,10 @@ const NewQuote = () => {
     }
 
 
-    let form = <FormItems  onSubmitActions={onSubmitAddNewPost} />
-    if (loading) form = <Spinner/>
     return (
-        <div>
-            {form}
-        </div>
+        <>
+            {loading ? <Spinner /> : <FormItems  onSubmitActions={onSubmitAddNewQuote} />}
+        </>
     );
 };
 

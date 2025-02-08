@@ -3,7 +3,8 @@ import {useNavigate, useParams} from "react-router-dom";
 import axiosApi from "../../axiosApi.ts";
 import FormItems from "../../components/FormItems/FormItems.tsx";
 import {IPostMutation} from "../../types";
-import Spinner from "../../components/UI/Spinner/Spinner.tsx";
+import Spinner from "../../Ul/Spiner/Spinner.tsx";
+
 
 
 const EditQuote = () => {

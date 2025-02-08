@@ -21,7 +21,6 @@ const App = () => {
                         <Route path="/" element={(<Quotes/>)}/>
                         <Route path="/Quotes" element={(<Quotes/>)}/>
                         <Route path="/NewQuote" element={(<NewQuote />)}/>
-                        <Route path="/posts/:idPost/edit" element={(<EditQuote />)}/>
                         <Route path="*" element={(<h1>Not page found</h1>)}/>
                     </Routes>
                 </main>
