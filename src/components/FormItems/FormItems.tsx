@@ -7,6 +7,7 @@ import axiosApi from "../../axiosApi.ts";
 interface IFormItem {
     onSubmitActions:  (quote: IQuoteForm) => void
     idQuote?: string
+    isEdit?: boolean;
 }
 const initialState = {
     author: '',
@@ -14,7 +15,7 @@ const initialState = {
     category: '',
 }
 
-const FormItems: React.FC<IFormItem> = ({ onSubmitActions,idQuote }) => {
+const FormItems: React.FC<IFormItem> = ({ onSubmitActions,idQuote, isEdit }) => {
     const [form, setForm] = useState<IQuoteForm>(initialState);
 
     const fetchOneQuote = useCallback(async () => {
@@ -50,7 +51,7 @@ const FormItems: React.FC<IFormItem> = ({ onSubmitActions,idQuote }) => {
 
     return (
         <form onSubmit={onSubmit}>
-            <h4> ADD</h4>
+            <h4> {isEdit ? 'Edit' : 'Add new '} game</h4>
             <hr/>
 
             <div className="mb-3">
@@ -90,7 +91,7 @@ const FormItems: React.FC<IFormItem> = ({ onSubmitActions,idQuote }) => {
                 ></textarea>
             </div>
 
-            <button type="submit" className="btn btn-primary mt-4">Add</button>
+            <button type="submit" className="btn btn-primary mt-4">{isEdit ? 'Edit' : 'Add new '} </button>
         </form>
     );
 };

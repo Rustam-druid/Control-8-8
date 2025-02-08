@@ -13,7 +13,8 @@ const EditQuote = () => {
     const {categoryId} = useParams();
 
     const onSubmitAddNewGame = async (quote: IQuoteForm) => {
-        try{
+      setLoading(true)
+       try{
          await axiosApi.put(`quotes/${categoryId}.json`, quote)
 
             navigate('/')
@@ -25,7 +26,7 @@ const EditQuote = () => {
     }
 
 
-    let form = <FormItems  idQuote={categoryId} onSubmitActions={onSubmitAddNewGame}/>
+    let form = <FormItems  isEdit idQuote={categoryId} onSubmitActions={onSubmitAddNewGame}/>
     if (loading) form = <Spinner />
     return (
         <div>

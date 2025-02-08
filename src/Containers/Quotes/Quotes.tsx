@@ -52,6 +52,7 @@ const Quotes = () => {
     }
 
     const deletePost = async (IdDelete: string) => {
+       setLoading(true);
         if (IdDelete) {
             try {
                 await axiosApi.delete<IQuoteAPI>(`quotes/${IdDelete}.json`);
