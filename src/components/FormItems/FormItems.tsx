@@ -1,10 +1,12 @@
-import { useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 import { IQuoteForm} from "../../types";
 import * as React from "react";
+import axiosApi from "../../axiosApi.ts";
+
 
 interface IFormItem {
-    onSubmitActions: (quote: IQuoteForm) => void
-
+    onSubmitActions:  (quote: IQuoteForm) => void
+    idQuote?: string
 }
 const initialState = {
     author: '',
@@ -12,8 +14,23 @@ const initialState = {
     category: '',
 }
 
-const FormItems: React.FC<IFormItem> = ({ onSubmitActions, }) => {
+const FormItems: React.FC<IFormItem> = ({ onSubmitActions,idQuote }) => {
     const [form, setForm] = useState<IQuoteForm>(initialState);
+
+    const fetchOneQuote = useCallback(async () => {
+        try {
+            const response = await axiosApi<IQuoteForm>(`quotes/${idQuote}.json`)
+            setForm(response.data || initialState)
+        } catch (e) {
+            console.log(e)
+        }
+
+    }, [idQuote,])
+
+    useEffect(() => {
+        void fetchOneQuote();
+
+    }, [fetchOneQuote]);
 
     const onSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -22,7 +39,7 @@ const FormItems: React.FC<IFormItem> = ({ onSubmitActions, }) => {
         }else {
             alert('Поля должны быть заполнены')
         }
-       
+
     };
 
     const inputChangeHandler = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -35,7 +52,7 @@ const FormItems: React.FC<IFormItem> = ({ onSubmitActions, }) => {
         <form onSubmit={onSubmit}>
             <h4> ADD</h4>
             <hr/>
-            
+
             <div className="mb-3">
                 <label htmlFor="category">Category
                     <select className='form-select' name="category" onChange={inputChangeHandler} value={form.category}>
@@ -49,7 +66,7 @@ const FormItems: React.FC<IFormItem> = ({ onSubmitActions, }) => {
                     </select>
                 </label>
             </div>
-            
+
             <div className="form-group">
                 <label htmlFor="name">Author</label>
                 <input

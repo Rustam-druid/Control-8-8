@@ -1,9 +1,10 @@
 import {categories} from "../../constants.ts";
-import {NavLink, useParams} from "react-router-dom";
+import {NavLink, useNavigate, useParams} from "react-router-dom";
 import {useCallback, useEffect, useState} from "react";
 import axiosApi from "../../axiosApi.ts";
 import {IQuote, IQuoteAPI} from "../../types";
 import Spinner from "../../Ul/Spiner/Spinner.tsx";
+import ItemsList from "../../components/ItemsList/ItemsList.tsx";
 
 const Categories = categories
 
@@ -11,6 +12,7 @@ const Quotes = () => {
     const [quotes, setQuotes] = useState<IQuote[]>([]);
     const [loading, setLoading] = useState(false);
     const {categoryId} = useParams();
+    const navigate = useNavigate();
 
     const fetchData = useCallback(async () => {
         try {
@@ -29,7 +31,6 @@ const Quotes = () => {
                     };
                 });
                 setQuotes(orderArrOfObj);
-                console.log(orderArrOfObj);
             }
         } catch (e) {
             console.log(e);
@@ -42,7 +43,7 @@ const Quotes = () => {
         void fetchData()
     }, [categoryId, fetchData]);
 
-    const findTitle = (categoryId:string) => {
+    const findTitle = (categoryId: string) => {
         const CLickTitle = Categories.filter((c) => {
             return c.id === categoryId;
         });
@@ -50,6 +51,17 @@ const Quotes = () => {
         return CLickTitle[0].title
     }
 
+    const deletePost = async (IdDelete: string) => {
+        if (IdDelete) {
+            try {
+                await axiosApi.delete<IQuoteAPI>(`quotes/${IdDelete}.json`);
+                void fetchData();
+                navigate('/');
+            } catch (e) {
+                console.log(e);
+            }
+        }
+    };
 
     return (
         <>
@@ -57,9 +69,10 @@ const Quotes = () => {
                 <div className="row justify-content-between">
                     <div className="col-4">
                         <ul>
-                            <li><NavLink to={`/`}>All</NavLink></li>
+                            <li><NavLink to="/">All</NavLink></li>
                             {Categories.map((category) => (
-                                <li key={category.id}><NavLink to={`/quotes/${category.id}`}>{category.title}</NavLink>
+                                <li key={category.id}>
+                                    <NavLink to={`/quotes/${category.id}`}>{category.title}</NavLink>
                                 </li>
                             ))}
                         </ul>
@@ -67,21 +80,21 @@ const Quotes = () => {
                     <div className="col-8">
                         <h3>{!categoryId ? 'All' : findTitle(categoryId)}</h3>
                         <div>
-                            {loading ? <Spinner/> :
+                            {loading ? (
+                                <Spinner />
+                            ) : (
                                 <>
-                                    {quotes.length === 0 ? <p>No quotes yet</p> :
+                                    {quotes.length === 0 ? (
+                                        <p>No quotes yet</p>
+                                    ) : (
                                         <>
                                             {quotes.map((quote) => (
-                                                <div key={quote.id} className="p-3 border border-black border-3">
-                                                    <h4>{quote.author}</h4>
-                                                    <h4>{quote.text}</h4>
-                                                </div>
+                                                <ItemsList key={quote.id} quote={quote} onDelete={() => deletePost(quote.id)} />
                                             ))}
                                         </>
-                                    }
+                                    )}
                                 </>
-                            }
-
+                            )}
                         </div>
                     </div>
                 </div>
