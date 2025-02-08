@@ -3,7 +3,6 @@ import Toolbar from "./components/Toolbar/Toolbar.tsx";
 import {Route, Routes} from "react-router-dom";
 import Quotes from "./Containers/Quotes/Quotes.tsx";
 import NewQuote from "./Containers/NewQuote/NewQuote.tsx";
-import EditQuote from "./Containers/EditQuote/EditQuote.tsx";
 
 const App = () => {
 
@@ -20,6 +19,7 @@ const App = () => {
                     <Routes>
                         <Route path="/" element={(<Quotes/>)}/>
                         <Route path="/Quotes" element={(<Quotes/>)}/>
+                        <Route path="/Quotes/:categoryId" element={(<Quotes/>)}/>
                         <Route path="/NewQuote" element={(<NewQuote />)}/>
                         <Route path="*" element={(<h1>Not page found</h1>)}/>
                     </Routes>

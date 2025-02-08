@@ -39,7 +39,7 @@ const FormItems: React.FC<IFormItem> = ({ onSubmitActions, }) => {
             <div className="mb-3">
                 <label htmlFor="category">Category
                     <select className='form-select' name="category" onChange={inputChangeHandler} value={form.category}>
-                        <option value='-' selected disabled> Select the category</option>
+                        <option value='-'  disabled> Select the category</option>
                         <option value="about-beauty">About beauty</option>
                         <option value="about-happiness-and-love">About happiness and love</option>
                         <option value="star-wars">Star Wars</option>

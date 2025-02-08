@@ -14,7 +14,7 @@ const NewQuote = () => {
     const onSubmitAddNewQuote = async (quote: IQuoteForm) => {
         try {
             await axiosApi.post('quotes.json', quote)
-            navigate('/')
+            navigate('/quotes/' + quote.category)
         } catch (e) {
             console.log(e);
         } finally {

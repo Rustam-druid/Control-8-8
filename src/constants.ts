@@ -1,9 +1,9 @@
 export const categories = [
-    {titile: 'About beauty', id: 'about-beauty'},
-    {titile: 'About happiness and love', id: 'about-happiness-and-love'},
-    {titile: 'Star Wars', id: 'star-wars'},
-    {titile: 'Motivational', id: 'motivational'},
-    {titile: 'Humour', id: 'humour'},
+    {title: 'About beauty', id: 'about-beauty'},
+    {title: 'About happiness and love', id: 'about-happiness-and-love'},
+    {title: 'Star Wars', id: 'star-wars'},
+    {title: 'Motivational', id: 'motivational'},
+    {title: 'Humour', id: 'humour'},
 ]
 
 
